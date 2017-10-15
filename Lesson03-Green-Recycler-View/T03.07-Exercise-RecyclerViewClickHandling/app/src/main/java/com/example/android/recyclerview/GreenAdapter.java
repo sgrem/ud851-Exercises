@@ -22,6 +22,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * We couldn't come up with a good name for this class. Then, we realized
@@ -41,6 +42,8 @@ public class GreenAdapter extends RecyclerView.Adapter<GreenAdapter.NumberViewHo
 
     // TODO COMPLETED (3) Create a final private ListItemClickListener called mOnClickListener
     private final ListItemClickListener mOnClickListener;
+
+    private Toast mToast;
 
     /*
      * The number of ViewHolders that have been created. Typically, you can figure out how many
@@ -179,6 +182,8 @@ public class GreenAdapter extends RecyclerView.Adapter<GreenAdapter.NumberViewHo
         // Will display which ViewHolder is displaying this data
         TextView viewHolderIndex;
 
+
+
         /**
          * Constructor for our ViewHolder. Within this constructor, we get a reference to our
          * TextViews and set an onClickListener to listen for clicks. Those will be handled in the
@@ -207,7 +212,13 @@ public class GreenAdapter extends RecyclerView.Adapter<GreenAdapter.NumberViewHo
         // TODO COMPLETED (6) Override onClick, passing the clicked item's position (getAdapterPosition()) to mOnClickListener via its onListItemClick method
         @Override
         public void onClick(View view){
-            mOnClickListener.onListItemClick(getAdapterPosition());
+            //mOnClickListener.onListItemClick(getAdapterPosition());
+            Context context = view.getContext();
+            if (mToast != null){
+                mToast.cancel();
+            }
+            mToast = Toast.makeText(context, "You clicked item " + getAdapterPosition(), Toast.LENGTH_LONG);
+            mToast.show();
         }
     }
 }
