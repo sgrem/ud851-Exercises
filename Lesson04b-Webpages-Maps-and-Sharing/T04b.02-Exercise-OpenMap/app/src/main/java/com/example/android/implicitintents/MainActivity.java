@@ -17,6 +17,7 @@ package com.example.android.implicitintents;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -48,12 +49,20 @@ public class MainActivity extends AppCompatActivity {
      * @param v Button that was clicked.
      */
     public void onClickOpenAddressButton(View v) {
-        // TODO (5) Store an address in a String
+        // TODO COMPLETED (5) Store an address in a String
+        // String addressString = "1600 Amphitheatre Parkway, CA";
+        String addressString = "4604 Copper Mountain Ln,Richardson,TX";
 
-        // TODO (6) Use Uri.Builder with the appropriate scheme and query to form the Uri for the address
+        // TODO COMPLETED (6) Use Uri.Builder with the appropriate scheme and query to form the Uri for the address
+        Uri.Builder addressUriBuilder = new Uri.Builder();
+        addressUriBuilder.scheme("geo")
+                .path("0,0")
+                .appendQueryParameter("q", addressString);
+        Uri addressUri = addressUriBuilder.build();
 
-        // TODO (7) Replace the Toast with a call to showMap, passing in the Uri from the previous step
-        Toast.makeText(this, "TODO: Open a map when this button is clicked", Toast.LENGTH_SHORT).show();
+        // TODO COMPLETED (7) Replace the Toast with a call to showMap, passing in the Uri from the previous step
+        // Toast.makeText(this, "TODO COMPLETED: Open a map when this button is clicked", Toast.LENGTH_SHORT).show();
+        showMap(addressUri);
     }
 
     /**
@@ -112,13 +121,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    // TODO (1) Create a method called showMap with a Uri as the single parameter
+    // TODO COMPLETED (1) Create a method called showMap with a Uri as the single parameter
+    private void showMap(Uri locationUri){
+
     // Do steps 2 - 4 within the showMap method
-        // TODO (2) Create an Intent with action type, Intent.ACTION_VIEW
+        // TODO COMPLETED (2) Create an Intent with action type, Intent.ACTION_VIEW
+        //Intent intentActionView = new Intent(Intent.ACTION_VIEW);
+        Intent intentActionView = new Intent("android.intent.action.VIEW");
 
-        // TODO (3) Set the data of the Intent to the Uri passed into this method
+        // TODO COMPLETED (3) Set the data of the Intent to the Uri passed into this method
+        intentActionView.setData(locationUri);
 
-        // TODO (4) Verify that this Intent can be launched and then call startActivity
+        // TODO COMPLETED (4) Verify that this Intent can be launched and then call startActivity
+        if (intentActionView.resolveActivity(getPackageManager()) != null){
+            startActivity(intentActionView);
+        }
 
-
+    }
 }
